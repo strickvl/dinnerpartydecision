@@ -4,17 +4,27 @@ import operator
 def run_decision_matrix():
 	# establishes the user's name along with the number of options we're evaluating
 	username = raw_input("What is your name?")
-	number_of_options= int(raw_input("Hello " + username +", how many options would you like to compare?"))
+	number_of_options = int(
+		raw_input(
+			f"Hello {username}, how many options would you like to compare?"
+		)
+	)
 	# setting a counter to help iterate through the different options
 	dish_count = 0
 	# making a list to store the names of those different options
 	list_of_options = []
 	# appends the dish titles to a list ('list_of_options')
-	while(dish_count<number_of_options):
-		list_of_options.append(raw_input("Give a title to option "+str(dish_count+1)+" of " + str(number_of_options)))
-		dish_count=dish_count+1
+	while (dish_count<number_of_options):
+		list_of_options.append(
+			raw_input(
+				f"Give a title to option {str(dish_count + 1)} of {number_of_options}"
+			)
+		)
+		dish_count += 1
 	else:
-		print("Thank you, " + username + ". Now we will evaluate the weighted criteria. Please use numbers from 1-10.")
+		print(
+			f"Thank you, {username}. Now we will evaluate the weighted criteria. Please use numbers from 1-10."
+		)
 	# begins weighted_criteria_evaluation
 	# gathers data on the various factors that will contribute
 	crit_cost=int(raw_input("How important is the cost of ingredients / utensils?"))
@@ -33,10 +43,11 @@ def run_decision_matrix():
 
 	# begins evaluation of each cooking option, gathering the scores
 	options_evaluation=[]
-	options_counter=0
-	while options_counter<number_of_options:
+	for options_counter in range(number_of_options):
 		options_evaluation.append({})
-		print("The following questions apply to " + list_of_options[options_counter] +". Please rate on a scale of 1-10.")
+		print(
+			f"The following questions apply to {list_of_options[options_counter]}. Please rate on a scale of 1-10."
+		)
 		cost=int(raw_input("How expensive are the ingredients?"))
 		options_evaluation[options_counter]['cost']=cost
 		stress=int(raw_input("How stressful will this meal/option likely be to prepare?"))
@@ -63,10 +74,8 @@ def run_decision_matrix():
 		options_evaluation[options_counter]['eco_distance']=eco_distance
 		eco_ethics=int(raw_input("How ethically sound is this option in terms of the choice of ingredients (meat etc)?"))
 		options_evaluation[options_counter]['eco_ethics']=eco_ethics
-		options_counter=options_counter+1
-	
 	# Score calculation process
-	
+
 	final_score=[]
 	for i in options_evaluation:
 		cost_final=crit_cost*i['cost']
@@ -85,12 +94,10 @@ def run_decision_matrix():
 		total_score=cost_final+stress_final+support_final+utensils_final+taste_final+time_final+novelty_final+volume_final+social_final+discussion_final+ingredients_final+eco_distance_final+eco_ethics_final
 		final_score.append(total_score)
 
-	final_dict={}
-	dict_counter=0
-	while dict_counter<number_of_options:
-		final_dict[list_of_options[dict_counter]]=final_score[dict_counter]
-		dict_counter=dict_counter+1
-	
+	final_dict = {
+		list_of_options[dict_counter]: final_score[dict_counter]
+		for dict_counter in range(number_of_options)
+	}
 	# Print final results
 
 	print("I have considered the options, and can give you the final scores as follows:")
